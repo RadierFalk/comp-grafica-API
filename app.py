@@ -6,8 +6,8 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "chave-apenas-para-aula")
 
 # Credenciais apenas para demonstração.
-USUARIO_CORRETO = os.getenv("APP_USER", "radier")
-SENHA_CORRETA = os.getenv("APP_PASSWORD", "leticia")
+USUARIO_CORRETO = os.getenv("APP_USER",)
+SENHA_CORRETA = os.getenv("APP_PASSWORD",)
 
 
 @app.route("/", methods=["GET", "POST"])
