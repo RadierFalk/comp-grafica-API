@@ -4,14 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bem-vindo</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 20px; background-color: cornflowerblue;}
-        a { display: inline-block; margin-top: 20px; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Bem-vindo, {{ usuario }}!</h1>
-    <p>A senha foi conferida pelo Python e o acesso foi autorizado.</p>
-    <a href="{{ url_for('sair') }}">Sair</a>
+    <main class="container card">
+        <h1>Bem-vindo, {{ usuario }}!</h1>
+
+        <p>
+            A senha foi conferida pelo Python e o acesso foi autorizado.
+        </p>
+
+        <div class="acoes">
+            <a class="botao" href="{{ url_for('camera.camera') }}">
+                Abrir câmera
+            </a>
+
+            <a class="botao secundario" href="{{ url_for('sair') }}">
+                Sair
+            </a>
+        </div>
+    </main>
 </body>
 </html>

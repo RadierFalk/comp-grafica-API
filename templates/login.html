@@ -4,57 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 420px; margin: 60px auto; padding: 20px; background-color: rgb(125, 95, 160); }
-        input, button { width: 100%; box-sizing: border-box; border-radius: 15px; border-style: solid ; padding: 10px; margin: 6px 0 14px; }
-        .erro { color: #b00020; }
-        #footer {font-family: Arial, sans-serif; margin-top: 75%;}
-        #gengar-container, #text {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;}
-        #gengar {
-            width: 120px; 
-            height: auto; 
-        }
-        #bt-enviar-container{
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        #bt-enviar{
-            width: 200px;
-            height: auto;
-            border-style: none;
-            
-        }
-        
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div id="gengar-container">
-        <img id="gengar" src="{{ url_for('static', filename='gengar.png') }}" alt="gengar">
-    </div>
-    
-    <h1 id="text">Login</h1>
-    <p>Digite seu usuário e sua senha.</p>
+    <main class="container card">
+        <h1>Login</h1>
+        <p>Digite seu usuário e sua senha.</p>
 
-    {% if erro %}
-        <p class="erro">{{ erro }}</p>
-    {% endif %}
+        {% if erro %}
+            <p class="erro">{{ erro }}</p>
+        {% endif %}
 
-    <form method="POST">
-        <label  for="usuario">Usuário</label>
-        <input id="usuario" name="usuario" type="text" required>
+        <form method="POST">
+            <label for="usuario">Usuário</label>
+            <input id="usuario" name="usuario" type="text" required>
 
-        <label for="senha">Senha</label>
-        <input id="senha" name="senha" type="password" required>
+            <label for="senha">Senha</label>
+            <input id="senha" name="senha" type="password" required>
 
-        <div id="bt-enviar-container">
-            <button id="bt-enviar" type="submit">Entrar</button>
-        </div>
-    </form>
+            <button type="submit">Entrar</button>
+        </form>
+    </main>
 </body>
 </html>
-
-
