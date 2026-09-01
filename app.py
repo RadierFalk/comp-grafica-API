@@ -10,11 +10,11 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config.update(
-    SECRET_KEY=os.getenv("SECRET_KEY", "troque-esta-chave-em-producao"),
+    SECRET_KEY=os.getenv("SECRET_KEY", "1234567890abcdef"),
     MAX_CONTENT_LENGTH=8 * 1024 * 1024,
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
-)
+)  
 
 # Credenciais simples para fins acadêmicos/demonstração.
 USUARIO_CORRETO = os.getenv("APP_USER", "admin")
