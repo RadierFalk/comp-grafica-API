@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem-vindo</title>
+    <title>Painel | Visão Computacional</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -11,7 +11,7 @@
         <h1>Bem-vindo, {{ usuario }}!</h1>
 
         <p>
-            A senha foi conferida pelo Python e o acesso foi autorizado.
+            Selecione uma das ferramentas de visão computacional abaixo.
         </p>
 
         <div class="acoes">
@@ -20,7 +20,7 @@
             </a>
             <a class="botao" href="{{ url_for('inspecao.inspecao') }}">
                 Abrir inspeção
-
+            </a>
             <a class="botao secundario" href="{{ url_for('sair') }}">
                 Sair
             </a>
