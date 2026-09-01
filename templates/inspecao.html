@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Câmera</title>
+    <title>Inspeção industrial</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <main class="container card camera-card">
-        <h1>Captura de imagem</h1>
-        <p>Olá, {{ usuario }}. Habilite a câmera e capture um frame.</p>
+    <main class="container card inspecao-card">
+        <h1>Estação de inspeção visual</h1>
+        <p>
+            Olá, {{ usuario }}. Posicione um objeto escuro sobre um fundo claro
+            dentro da região central e execute a inspeção.
+        </p>
         
-        <video id="video" autoplay playsinline></video>
+        <div class="video-industrial">
+            <video id="video" autoplay playsinline></video>
+            <div class="zona-inspecao"></div>
+        </div>
+        
         <canvas id="canvas" hidden></canvas>
         
         <p id="mensagem" class="mensagem">
@@ -20,7 +27,7 @@
         
         <div class="acoes">
             <button id="btnAbrir" type="button">Habilitar câmera</button>
-            <button id="btnCapturar" type="button" disabled>Capturar frame</button>
+            <button id="btnInspecionar" type="button" disabled>Inspecionar peça</button>
             <button id="btnFechar" type="button" class="secundario">Desligar câmera</button>
             <a class="botao secundario" href="{{ url_for('bem_vindo') }}">Voltar</a>
         </div>
@@ -31,9 +38,9 @@
         const canvas = document.getElementById("canvas");
         const mensagem = document.getElementById("mensagem");
         const btnAbrir = document.getElementById("btnAbrir");
-        const btnCapturar = document.getElementById("btnCapturar");
+        const btnInspecionar = document.getElementById("btnInspecionar");
         const btnFechar = document.getElementById("btnFechar");
-
+        
         let stream = null;
 
         async function habilitarCamera() {
@@ -43,10 +50,10 @@
                     audio: false
                 });
                 video.srcObject = stream;
-                btnCapturar.disabled = false;
-                mensagem.textContent = "Câmera habilitada.";
+                btnInspecionar.disabled = false;
+                mensagem.textContent = "Câmera habilitada. Posicione a peça.";
             } catch (erro) {
-                mensagem.textContent = "Não foi possível acessar a câmera.";
+                mensagem.textContent = "Não foi possível acessar a câmera. Verifique a permissão.";
                 console.error(erro);
             }
         }
@@ -57,11 +64,11 @@
                 video.srcObject = null;
                 stream = null;
             }
-            btnCapturar.disabled = true;
+            btnInspecionar.disabled = true;
             mensagem.textContent = "Câmera desligada.";
         }
 
-        async function capturarFrame() {
+        async function inspecionarPeca() {
             if (!stream || video.videoWidth === 0) {
                 mensagem.textContent = "Habilite a câmera primeiro.";
                 return;
@@ -72,14 +79,15 @@
             const contexto = canvas.getContext("2d");
             contexto.drawImage(video, 0, 0, canvas.width, canvas.height);
             
-            mensagem.textContent = "Processando imagem...";
+            mensagem.textContent = "Inspeção em processamento...";
+            btnInspecionar.disabled = true;
 
             canvas.toBlob(async function (blob) {
                 const formulario = new FormData();
-                formulario.append("frame", blob, "frame.png");
+                formulario.append("frame", blob, "inspecao.png");
 
                 try {
-                    const resposta = await fetch("{{ url_for('camera.capturar_frame') }}", {
+                    const resposta = await fetch("{{ url_for('inspecao.analisar_frame') }}", {
                         method: "POST",
                         body: formulario
                     });
@@ -88,19 +96,21 @@
                     
                     if (!resposta.ok) {
                         mensagem.textContent = dados.erro;
+                        btnInspecionar.disabled = false;
                         return;
                     }
 
                     window.location.href = dados.url;
                 } catch (erro) {
-                    mensagem.textContent = "Erro ao enviar o frame para o servidor.";
+                    mensagem.textContent = "Erro ao enviar a imagem para o servidor.";
+                    btnInspecionar.disabled = false;
                     console.error(erro);
                 }
             }, "image/png");
         }
 
         btnAbrir.addEventListener("click", habilitarCamera);
-        btnCapturar.addEventListener("click", capturarFrame);
+        btnInspecionar.addEventListener("click", inspecionarPeca);
         btnFechar.addEventListener("click", desligarCamera);
     </script>
 </body>

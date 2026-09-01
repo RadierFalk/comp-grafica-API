@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado da inspeção</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="container card resultado-card">
+        <h1>Resultado da inspeção</h1>
+        
+        <div class="status-industrial status-{{ dados.status|lower }}">
+            {{ dados.status }}
+        </div>
+        
+        <div class="indicadores">
+            <p><strong>ID:</strong> {{ dados.id }}</p>
+            <p><strong>Data/hora:</strong> {{ dados.data_hora }}</p>
+            <p><strong>Área detectada:</strong> {{ dados.area_pixels }} px²</p>
+            <p>
+                <strong>Ocupação da ROI:</strong>
+                {{ dados.percentual_ocupacao }}%
+            </p>
+            <p>
+                <strong>Limite de aprovação:</strong>
+                {{ dados.limite_percentual }}%
+            </p>
+        </div>
+        
+        <div class="grade-imagens grade-industrial">
+            <section>
+                <h2>Frame original</h2>
+                <img src="{{ original }}" alt="Frame original">
+            </section>
+            <section>
+                <h2>Máscara da ROI</h2>
+                <img src="{{ mascara }}" alt="Máscara binária">
+            </section>
+            <section>
+                <h2>Resultado anotado</h2>
+                <img src="{{ resultado }}" alt="Resultado da inspeção">
+            </section>
+        </div>
+        
+        <div class="acoes">
+            <a class="botao" href="{{ url_for('inspecao.inspecao') }}">
+                Nova inspeção
+            </a>
+            <a class="botao secundario" href="{{ url_for('bem_vindo') }}">
+                Voltar
+            </a>
+        </div>
+    </main>
+</body>
+</html>

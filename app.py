@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, redirect, render_template, request, session, url_for
 from camera import camera_bp
-
+from inspecao import inspecao_bp
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "chave-apenas-para-aula")
@@ -13,7 +13,7 @@ SENHA_CORRETA = os.getenv("APP_PASSWORD", "1234")
 
 # Registra as rotas da câmera.
 app.register_blueprint(camera_bp)
-
+app.register_blueprint(inspecao_bp)
 
 @app.route("/", methods=["GET", "POST"])
 def login():
